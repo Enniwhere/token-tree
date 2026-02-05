@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f5f5f5;
+    overflow: hidden; /* Prevent body scroll - container handles it */
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Prompt Section */
+.prompt-container {
+    width: 300px;
+    min-width: 300px;
+    background-color: #ffffff;
+    border-right: 2px solid #e0e0e0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.output-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.prompt-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.prompt-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #222;
+    font-weight: 500;
+}
+
+/* Input Controls */
+#promptInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 80px;
+}
+
+#promptInput:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.examples-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.examples-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.example-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.example-btn:hover {
+    background-color: #e8f4ff;
+    border-color: #4a90e2;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.controls label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.controls input[type="number"] {
+    flex: 1;
+    min-width: 60px;
+    padding: 6px 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.controls input[type="number"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+/* Buttons */
+.generate-btn, .mock-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.generate-btn {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.generate-btn:hover {
+    background-color: #357abd;
+}
+
+.generate-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.mock-btn {
+    background-color: #f5f5f5;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.mock-btn:hover {
+    background-color: #e8e8e8;
+}
+
+/* Loading Indicator */
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #4a90e2;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e0e0e0;
+    border-top-color: #4a90e2;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Error Message */
+.error {
+    padding: 10px;
+    background-color: #fff0f0;
+    border: 1px solid #ffcccc;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #cc0000;
+}
+
+/* Tree Section */
+.tree-container {
+    flex: 1;
+    overflow: auto; /* Enable scrolling in both directions */
+    background-color: #fafafa;
+    position: relative;
+}
+
+#treeSvg {
+    display: block; /* Prevent inline spacing issues */
+    min-width: 100%;
+    min-height: 100%;
+}
+
+/* Token Nodes */
+.token-node {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.token-node rect {
+    fill: #ffffff;
+    stroke: #999;
+    stroke-width: 1.5;
+    rx: 4;
+}
+
+.token-node.main-path rect {
+    fill: none;
+    stroke: none;
+}
+
+.token-node.alternative rect {
+    fill: rgba(74, 144, 226, 0.05);
+    stroke: rgba(74, 144, 226, 0.2);
+    stroke-width: 1;
+}
+
+.token-node text {
+    fill: #333;
+    font-size: 16px;
+    font-weight: 400;
+    pointer-events: none;
+    user-select: none;
+}
+
+.token-node.main-path text {
+    fill: #222;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+}
+
+.token-node.alternative text {
+    fill: #999;
+    font-weight: 400;
+}
+
+.token-node.alternative:hover rect {
+    fill: rgba(74, 144, 226, 0.15);
+    stroke: rgba(74, 144, 226, 0.5);
+    stroke-width: 2;
+}
+
+.token-node.alternative:hover text {
+    fill: #4a90e2;
+}
+
+/* Active Branch Nodes */
+.token-node.active-branch rect {
+    fill: rgba(231, 76, 60, 0.08);
+    stroke: rgba(231, 76, 60, 0.3);
+    stroke-width: 1.5;
+}
+
+.token-node.active-branch text {
+    fill: #c0392b;
+    font-weight: 500;
+}
+
+.token-node.branch-continuation rect {
+    fill: none;
+    stroke: none;
+}
+
+.token-node.branch-continuation text {
+    fill: #c0392b;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+/* Connection Lines */
+.connection-line {
+    fill: none;
+    stroke: #4a90e2;
+    stroke-width: 20;
+    stroke-linecap: round;
+    opacity: 0.3;
+}
+
+.connection-line.main-path {
+    stroke: #4a90e2;
+    opacity: 1;
+}
+
+

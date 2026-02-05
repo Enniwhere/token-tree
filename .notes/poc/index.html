@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Tree Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="prompt-container">
+            <div class="input-section">
+                <label class="prompt-label" for="promptInput">Enter Prompt:</label>
+                <textarea id="promptInput" placeholder="Once upon a time" rows="4"></textarea>
+                
+                <div class="examples-section">
+                    <div class="examples-label">Examples:</div>
+                    <button class="example-btn" data-prompt="Once upon a time">Once upon a time</button>
+                    <button class="example-btn" data-prompt="The future of artificial intelligence">The future of AI</button>
+                    <button class="example-btn" data-prompt="In a world where">In a world where</button>
+                </div>
+                
+                <div class="controls">
+                    <label for="maxTokens">Max Tokens:</label>
+                    <input type="number" id="maxTokens" value="50" min="1" max="200">
+                </div>
+                
+                <div class="controls">
+                    <label for="temperature">Temperature:</label>
+                    <input type="number" id="temperature" value="0.7" min="0" max="2" step="0.1">
+                </div>
+                
+                <div class="controls">
+                    <label for="topLogprobs">Top Alternatives:</label>
+                    <input type="number" id="topLogprobs" value="4" min="1" max="10">
+                </div>
+                
+                <div class="controls">
+                    <label for="minProbability">Min Probability (%):</label>
+                    <input type="number" id="minProbability" value="5" min="0" max="100" step="1">
+                </div>
+                
+                <button id="generateBtn" class="generate-btn">Generate</button>
+                <button id="mockDataBtn" class="mock-btn">Load Mock Data</button>
+                
+                <div id="loadingIndicator" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <span>Generating tokens...</span>
+                </div>
+                
+                <div id="errorMessage" class="error" style="display: none;"></div>
+            </div>
+            
+            <div class="output-section">
+                <div class="prompt-label">Generated:</div>
+                <div class="prompt-text" id="promptText"></div>
+            </div>
+        </div>
+        
+        <div class="tree-container">
+            <svg id="treeSvg" width="100%" height="100%">
+                <!-- Tree will be rendered here -->
+            </svg>
+        </div>
+    </div>
+
+    <script src="mock-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
