@@ -8,9 +8,9 @@
 - **$state runes**: Svelte 5 reactive state management
 
 ## Actions
-- [ ] Create Svelte project: `npm create vite@latest token-tree-web -- --template svelte`
-- [ ] Install dependencies: `cd token-tree-web && npm install`
-- [ ] Create folder structure: `src/lib/llm/`, `src/lib/game/`, `src/lib/rendering/`, `src/components/`
+- [X] Create Svelte project: `npm create vite@latest token-tree-web -- --template svelte`
+- [X] Install dependencies: `cd token-tree-web && npm install`
+- [X] Create folder structure: `src/lib/llm/`, `src/lib/game/`, `src/lib/rendering/`, `src/components/`
 - [ ] Create `App.svelte` with split layout (controls left, visualization right)
 - [ ] Add CSS variables for colors and spacing in `app.css`
 - [ ] Start dev server: `npm run dev`
