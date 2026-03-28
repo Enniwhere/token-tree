@@ -1,4 +1,4 @@
-# Step 3: Token Data Structures
+# Step 3: Game State Data Structures
 
 **Learn:** $derived, $effect, state management
 
@@ -8,7 +8,7 @@
 - **State management**: Centralized game state with reactive updates
 
 ## Actions
-- [ ] Create `src/lib/llm/types.ts` with TokenData and BranchData interfaces
+- [ ] Create `src/lib/llm/types.ts` with TokenNode interface
 - [ ] Create `src/lib/game/state.ts` with GameState class using $state and $derived runes
 - [ ] Create `src/lib/game/state-manager.ts` with methods for adding/removing tokens and branches
 - [ ] Integrate GameState into App.svelte

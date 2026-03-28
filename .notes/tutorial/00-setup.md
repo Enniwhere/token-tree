@@ -7,12 +7,12 @@
 - **npm**: Package manager for installing and managing JavaScript dependencies
 
 ## Actions
-- [ ] Install Node.js 18+ from https://nodejs.org
-- [ ] Verify installation: `node --version` and `npm --version`
-- [ ] Create project folder: `mkdir token-tree-web && cd token-tree-web`
+- [X] Install Node.js 18+ from https://nodejs.org
+- [X] Verify installation: `node --version` and `npm --version`
+- [X] Create project folder: `mkdir token-tree-web && cd token-tree-web`
 
 ## Verify
-- [ ] `node --version` shows 18 or higher
+- [X] `node --version` shows 18 or higher
 
 ## Resources
 - Node.js: https://nodejs.org

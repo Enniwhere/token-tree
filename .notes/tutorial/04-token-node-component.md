@@ -11,7 +11,7 @@
 - [ ] Create `src/components/TokenNode.svelte` with props for token data
 - [ ] Add click handler with onClick callback
 - [ ] Add hover states with isHovered reactive variable
-- [ ] Add conditional classes for main-path, alternative, hovered, selected
+- [ ] Add conditional classes for alternative, hovered, selected
 - [ ] Add probability bar visualization
 - [ ] Add CSS transitions for smooth hover effects
 - [ ] Test clicking and hovering on tokens

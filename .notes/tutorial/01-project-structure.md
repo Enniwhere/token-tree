@@ -11,12 +11,12 @@
 - [X] Create Svelte project: `npm create vite@latest token-tree-web -- --template svelte`
 - [X] Install dependencies: `cd token-tree-web && npm install`
 - [X] Create folder structure: `src/lib/llm/`, `src/lib/game/`, `src/lib/rendering/`, `src/components/`
-- [ ] Create `App.svelte` with split layout (controls left, visualization right)
-- [ ] Add CSS variables for colors and spacing in `app.css`
-- [ ] Start dev server: `npm run dev`
+- [X] Create `App.svelte` with split layout (controls left, visualization right)
+- [X] Add CSS variables for colors and spacing in `app.css`
+- [X] Start dev server: `npm run dev`
 
 ## Verify
-- [ ] Open http://localhost:5173 and see the split layout
+- [X] Open http://localhost:5173 and see the split layout
 
 ## Resources
 - Svelte components: https://svelte.dev/docs#components
