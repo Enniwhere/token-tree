@@ -1,12 +1,32 @@
 <script>
+  import LLMLoader from './components/LLMLoader.svelte';
+
+  let backend = $state(null);
+
+  function handleLoad(loadedBackend) {
+    backend = loadedBackend;
+    console.log('Model loaded!', backend);
+  }
+
+  function handleError(error) {
+    console.error('Failed to load model:', error);
+  }
 </script>
 
 <div class="container">
   <aside class="controls">
-    <!-- Left side: controls go here -->
+    <LLMLoader onLoad={handleLoad} onError={handleError} />
   </aside>
   <main class="visualization">
-    <!-- Right side: canvas goes here -->
+    {#if backend}
+      <div class="ready-message">
+        Model loaded! Ready to generate tokens.
+      </div>
+    {:else}
+      <div class="placeholder">
+        Load a model to begin
+      </div>
+    {/if}
   </main>
 </div>
 
@@ -29,5 +49,20 @@
     flex: 1;
     padding: var(--spacing-lg);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ready-message {
+    font-size: var(--font-size-xl);
+    color: var(--color-success);
+    text-align: center;
+  }
+
+  .placeholder {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    text-align: center;
   }
 </style>
