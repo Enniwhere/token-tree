@@ -1,6 +1,8 @@
 <script>
   import LLMLoader from './components/LLMLoader.svelte';
+  import { createGameState } from './lib/game/state-manager';
 
+  const game = createGameState();
   let backend = $state(null);
 
   function handleLoad(loadedBackend) {
