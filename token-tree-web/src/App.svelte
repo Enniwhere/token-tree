@@ -10,6 +10,7 @@
       // Test data - create sample tokens with different probabilities
   const testNodes: TokenNodeType[] = [
     {
+      id: '1',
       prompt: '',
       token: 'The',
       probability: 1.0,
@@ -17,6 +18,7 @@
       children: []
     },
     {
+      id: '2',
       prompt: 'The',
       token: 'quick',
       probability: 0.85,
@@ -24,6 +26,7 @@
       children: []
     },
     {
+      id: '3',
       prompt: 'The',
       token: 'slow',
       probability: 0.10,
@@ -31,6 +34,7 @@
       children: []
     },
     {
+      id: '4',
       prompt: 'The',
       token: 'lazy',
       probability: 0.05,
@@ -38,6 +42,7 @@
       children: []
     },
     {
+      id: '5',
       prompt: 'The quick',
       token: 'brown',
       probability: 0.92,
@@ -45,6 +50,7 @@
       children: []
     },
     {
+      id: '6',
       prompt: 'The quick',
       token: 'red',
       probability: 0.08,
