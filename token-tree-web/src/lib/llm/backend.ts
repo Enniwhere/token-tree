@@ -13,6 +13,7 @@ export interface GenerationParams {
  * Data for a single token
  */
 export interface TokenNode {
+    id: string;
     prompt: string;
     token: string;
     probability: number;

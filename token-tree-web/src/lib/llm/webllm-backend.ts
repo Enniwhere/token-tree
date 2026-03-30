@@ -77,7 +77,8 @@ export class WebLLMBackend implements LLMBackend {
     private transformResponse(response: webllm.ChatCompletion, node: TokenNode): GenerationResult {
         const nodes: TokenNode[] = [];
 
-        const logprobs = response.choices[0]?.logprobs;
+        const logprobs = response.choices[0]?.logprobs?.content;
+        
 
         var parentNode: TokenNode = node;
         nodes.push(parentNode);
@@ -89,6 +90,7 @@ export class WebLLMBackend implements LLMBackend {
                 const currentProbability = Math.exp(currentLogprob);
 
                 var currentNode: TokenNode = {
+                    id: crypto.randomUUID(),
                     prompt: currentPrompt,
                     token: currentToken,
                     probability: currentProbability,
@@ -96,21 +98,23 @@ export class WebLLMBackend implements LLMBackend {
                     children: [],
                 };
                 parentNode.children.push(currentNode);
-
+                
                 if (tokenLogprobs.top_logprobs && Array.isArray(tokenLogprobs.top_logprobs)) {
-                    tokenLogprobs.top_logprobs.forEach((alt: { token: string; logprob: number; }) => {
-                        // Skip the main token since it's already included
-                        if (alt.token === currentToken) return;
+                    
+                    const sortedTopLogprobs = tokenLogprobs.top_logprobs.sort((a, b) => b.logprob - a.logprob);
+                    sortedTopLogprobs.forEach((alt: { token: string; logprob: number; }) => {
 
                         const altLogprob = alt.logprob || 0;
                         const altProbability = Math.exp(altLogprob);
                         const altNode: TokenNode = {
+                            id: crypto.randomUUID(),
                             prompt: currentPrompt,
                             token: alt.token,
                             probability: altProbability,
                             root: false,
                             children: [],
                         };
+
                         parentNode.children.push(altNode);
                         nodes.push(altNode);
                     });

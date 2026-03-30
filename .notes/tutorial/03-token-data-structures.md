@@ -8,14 +8,14 @@
 - **State management**: Centralized game state with reactive updates
 
 ## Actions
-- [ ] Create `src/lib/llm/types.ts` with TokenNode interface
-- [ ] Create `src/lib/game/state.ts` with GameState class using $state and $derived runes
-- [ ] Create `src/lib/game/state-manager.ts` with methods for adding/removing tokens and branches
-- [ ] Integrate GameState into App.svelte
-- [ ] Test reactive updates by changing state values
+- [X] Create `src/lib/llm/types.ts` with TokenNode interface
+- [X] Create `src/lib/game/state.ts` with GameState class using $state and $derived runes
+- [X] Create `src/lib/game/state-manager.ts` with methods for adding/removing tokens and branches
+- [X] Integrate GameState into App.svelte
+- [X] Test reactive updates by changing state values
 
 ## Verify
-- [ ] State changes trigger UI updates automatically
+- [X] State changes trigger UI updates automatically
 
 ## Resources
 - Svelte stores: https://svelte.dev/docs#runes

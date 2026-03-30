@@ -8,13 +8,13 @@
 - **Conditional classes**: Apply styles based on component state
 
 ## Actions
-- [ ] Create `src/components/TokenNode.svelte` with props for token data
-- [ ] Add click handler with onClick callback
-- [ ] Add hover states with isHovered reactive variable
-- [ ] Add conditional classes for alternative, hovered, selected
-- [ ] Add probability bar visualization
-- [ ] Add CSS transitions for smooth hover effects
-- [ ] Test clicking and hovering on tokens
+- [X] Create `src/components/TokenNode.svelte` with props for token data
+- [X] Add click handler with onClick callback
+- [X] Add hover states with isHovered reactive variable
+- [X] Add conditional classes for alternative, hovered, selected
+- [X] Add probability bar visualization
+- [X] Add CSS transitions for smooth hover effects
+- [X] Test clicking and hovering on tokens
 
 ## Verify
 - [ ] Clicking tokens triggers callback, hovering shows visual feedback
