@@ -3,7 +3,7 @@ import type {
     LLMBackend,
     GenerationParams,
     GenerationResult,
-    TokenNode,
+    TokenNode as TokenNodeType,
     LoadProgress,
 } from './backend';
 import { WEBLLM_CONFIG, DEFAULT_MODEL } from './config';
@@ -74,13 +74,13 @@ export class WebLLMBackend implements LLMBackend {
     }
   }
     
-    private transformResponse(response: webllm.ChatCompletion, node: TokenNode): GenerationResult {
-        const nodes: TokenNode[] = [];
+    private transformResponse(response: webllm.ChatCompletion, node: TokenNodeType): GenerationResult {
+        const nodes: TokenNodeType[] = [];
 
         const logprobs = response.choices[0]?.logprobs?.content;
         
 
-        var parentNode: TokenNode = node;
+        var parentNode: TokenNodeType = node;
         nodes.push(parentNode);
         var currentPrompt = node.prompt + node.token;
         if (logprobs && Array.isArray(logprobs)) {
@@ -89,11 +89,12 @@ export class WebLLMBackend implements LLMBackend {
                 const currentLogprob = tokenLogprobs.logprob || 0;
                 const currentProbability = Math.exp(currentLogprob);
 
-                var currentNode: TokenNode = {
+                var currentNode: TokenNodeType = {
                     id: crypto.randomUUID(),
                     prompt: currentPrompt,
                     token: currentToken,
                     probability: currentProbability,
+                    cumprob: parentNode.cumprob * currentProbability,
                     root: false,
                     children: [],
                 };
@@ -106,11 +107,12 @@ export class WebLLMBackend implements LLMBackend {
 
                         const altLogprob = alt.logprob || 0;
                         const altProbability = Math.exp(altLogprob);
-                        const altNode: TokenNode = {
+                        const altNode: TokenNodeType = {
                             id: crypto.randomUUID(),
                             prompt: currentPrompt,
                             token: alt.token,
                             probability: altProbability,
+                            cumprob: parentNode.cumprob * altProbability,
                             root: false,
                             children: [],
                         };

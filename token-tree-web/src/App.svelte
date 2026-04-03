@@ -1,63 +1,114 @@
 <script lang="ts">
   import LLMLoader from './components/LLMLoader.svelte';
   import TokenNode from './components/TokenNode.svelte';
+  import { CanvasRenderer } from './lib/rendering/canvas-renderer';
+  import { HangingTreeLayout } from './lib/game/layout/tree-layout';
   import { createGameState } from './lib/game/state-manager';
   import type { TokenNode as TokenNodeType } from './lib/llm/backend';
 
   const game = createGameState();
   let backend = $state(null);
   let selectedNode = $state<string | null>(null);
-      // Test data - create sample tokens with different probabilities
-  const testNodes: TokenNodeType[] = [
-    {
-      id: '1',
-      prompt: '',
-      token: 'The',
-      probability: 1.0,
-      root: true,
-      children: []
-    },
-    {
-      id: '2',
-      prompt: 'The',
-      token: 'quick',
-      probability: 0.85,
-      root: false,
-      children: []
-    },
-    {
-      id: '3',
-      prompt: 'The',
-      token: 'slow',
-      probability: 0.10,
-      root: false,
-      children: []
-    },
-    {
-      id: '4',
-      prompt: 'The',
-      token: 'lazy',
-      probability: 0.05,
-      root: false,
-      children: []
-    },
-    {
-      id: '5',
-      prompt: 'The quick',
-      token: 'brown',
-      probability: 0.92,
-      root: false,
-      children: []
-    },
-    {
-      id: '6',
-      prompt: 'The quick',
-      token: 'red',
-      probability: 0.08,
-      root: false,
-      children: []
+  let canvasElement = $state<HTMLCanvasElement | null>(null);
+  let renderer = $state<CanvasRenderer | null>(null);
+
+  // Test data - create sample tokens with different probabilities
+  const testTree: TokenNodeType = {
+    id: '1',
+    prompt: '',
+    token: 'The',
+    probability: 1.0,
+    cumprob: 1.0,
+    root: true,
+    children: [
+      {
+        id: '2',
+        prompt: 'The',
+        token: 'quick',
+        probability: 0.85,
+        cumprob: 0.85,
+        root: false,
+        children: [
+          {
+            id: '5',
+            prompt: 'The quick',
+            token: 'brown',
+            probability: 0.92,
+            cumprob: 0.78,
+            root: false,
+            children: []
+          },
+          {
+            id: '6',
+            prompt: 'The quick',
+            token: 'red',
+            probability: 0.08,
+            cumprob: 0.07,
+            root: false,
+            children: []
+          }
+        ]
+      },
+      {
+        id: '3',
+        prompt: 'The',
+        token: 'slow',
+        probability: 0.10,
+        cumprob: 0.10,
+        root: false,
+        children: []
+      },
+      {
+        id: '4',
+        prompt: 'The',
+        token: 'lazy',
+        probability: 0.05,
+        cumprob: 0.05,
+        root: false,
+        children: []
+      }
+    ]
+  };
+
+  $effect(() => {
+    if (canvasElement && backend) {
+      renderer = new CanvasRenderer(canvasElement);
+
+      const layout = new HangingTreeLayout().computeLayout(testTree);
+
+      const rect = canvasElement.getBoundingClientRect();
+      renderer.resize(rect.width, rect.height);
+
+      renderer.render(testTree, layout);
     }
-  ];
+  });
+
+  function handleCanvasClick(event: MouseEvent) {
+    if (!renderer) return;
+
+    const rect = canvasElement!.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const layout = new HangingTreeLayout().computeLayout(testTree);
+    const clickedNodeId = renderer.getNodeAtPosition(x, y, layout);
+
+    if (clickedNodeId) {
+      const findNodeById = (node: TokenNodeType, id: string): TokenNodeType | null => {
+        if (node.id === id) return node;
+        for (const child of node.children) {
+          const result = findNodeById(child, id);
+          if (result) return result;
+        }
+        return null;
+      };
+
+      const clickedNode = findNodeById(testTree, clickedNodeId);
+      if (clickedNode) {
+        handleNodeClick(clickedNode);
+      }
+    }
+  }
 
   function handleNodeClick(node: TokenNodeType) {
     selectedNode = node.prompt + ' ' + node.token;
@@ -81,21 +132,15 @@
   <main class="visualization">
     {#if backend}
       <div class="test-area">
-        <h2>TokenNode Component Test</h2>
-        <div class="nodes-grid">
-          {#each testNodes as node}
-            <TokenNode 
-              node={node}
-              isSelected={selectedNode === node.prompt + ' ' + node.token}
-              onClick={() => handleNodeClick(node)}
-            />
-          {/each}
-        </div>
-        {#if selectedNode}
-          <div class="selection-info">
-            Selected: <strong>{selectedNode}</strong>
-          </div>
-        {/if}
+        <h2>TokenTree Test</h2>
+        
+        <canvas 
+          id="tree-canvas"
+          bind:this={canvasElement}
+          onclick={handleCanvasClick}
+          style="width: 100%; height: 400px; border: 1px solid var(--color-border); border-radius: 8px;"
+        ></canvas> 
+
       </div>
     {:else}
       <div class="placeholder">
