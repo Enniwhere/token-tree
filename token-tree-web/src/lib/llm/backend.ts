@@ -17,6 +17,7 @@ export interface TokenNode {
     prompt: string;
     token: string;
     probability: number;
+    cumprob: number;
     root: boolean;
     children: TokenNode[];
 }

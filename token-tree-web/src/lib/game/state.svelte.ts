@@ -1,12 +1,12 @@
-import type { TokenNode } from '../llm/backend';
+import type { TokenNode as TokenNodeType } from '../llm/backend';
 
 export class GameState {
 
-    root: TokenNode | null = $state(null);
+    root: TokenNodeType | null = $state(null);
 
-    selectedNode: TokenNode | null = $state(null);
+    selectedNode: TokenNodeType | null = $state(null);
 
-    nodes: TokenNode[] = $state([]);
+    nodes: TokenNodeType[] = $state([]);
 
     score: number = $state(0);
 

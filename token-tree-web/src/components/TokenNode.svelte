@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { TokenNode } from "../lib/llm/backend";
+    import type { TokenNode as TokenNodeType } from "../lib/llm/backend";
 
     interface Props {
-        node: TokenNode;
+        node: TokenNodeType;
         isSelected?: boolean;
         onClick?: () => void;
     }
